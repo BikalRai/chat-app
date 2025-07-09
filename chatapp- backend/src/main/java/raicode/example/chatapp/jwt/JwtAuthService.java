@@ -1,5 +1,7 @@
 package raicode.example.chatapp.jwt;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import raicode.example.chatapp.dto.auth.AuthResponse;
 import raicode.example.chatapp.dto.auth.LoginRequest;
 import raicode.example.chatapp.dto.auth.RegisterRequest;
 import raicode.example.chatapp.enums.Role;
+import raicode.example.chatapp.enums.UserStatus;
 import raicode.example.chatapp.models.User;
 import raicode.example.chatapp.repositories.UserRepository;
 
@@ -35,7 +38,10 @@ public class JwtAuthService {
     	User user = new User();
     	user.setEmail(request.getEmail());
     	user.setPassword(passwordEncoder.encode(request.getPassword()));
-    	user.setRole(Role.ROLE_USER);
+    	user.setRole(Role.USER);
+    	user.setCreatedAt(LocalDateTime.now());
+    	user.setLastActive(LocalDateTime.now());
+    	user.setUserStatus(UserStatus.OFFLINE);
     	
     	userRepository.save(user);
     	
