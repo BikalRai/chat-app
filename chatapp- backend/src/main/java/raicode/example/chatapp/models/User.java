@@ -40,7 +40,7 @@ public class User {
 	private LocalDateTime createdAt;
 	private LocalDateTime lastActive;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_profileId")
 	private Profile profile;
 

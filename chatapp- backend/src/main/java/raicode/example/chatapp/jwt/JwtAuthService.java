@@ -14,6 +14,7 @@ import raicode.example.chatapp.dto.auth.LoginRequest;
 import raicode.example.chatapp.dto.auth.RegisterRequest;
 import raicode.example.chatapp.enums.Role;
 import raicode.example.chatapp.enums.UserStatus;
+import raicode.example.chatapp.models.Profile;
 import raicode.example.chatapp.models.User;
 import raicode.example.chatapp.repositories.UserRepository;
 
@@ -42,6 +43,9 @@ public class JwtAuthService {
     	user.setCreatedAt(LocalDateTime.now());
     	user.setLastActive(LocalDateTime.now());
     	user.setUserStatus(UserStatus.OFFLINE);
+    	
+    	Profile profile = new Profile();
+    	user.setProfile(profile);
     	
     	userRepository.save(user);
     	

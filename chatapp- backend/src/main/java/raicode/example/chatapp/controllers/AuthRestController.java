@@ -13,11 +13,11 @@ import raicode.example.chatapp.jwt.JwtAuthService;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthRestController {
 	
 	private final JwtAuthService jwtAuthService;
 	
-	public AuthController (JwtAuthService jwtAuthService) {
+	public AuthRestController (JwtAuthService jwtAuthService) {
 		this.jwtAuthService = jwtAuthService;
 	}
 	
