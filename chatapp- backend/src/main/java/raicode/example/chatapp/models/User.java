@@ -2,7 +2,9 @@ package raicode.example.chatapp.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +16,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -28,11 +32,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
+	
+	@Column(nullable = false)
 	private String password;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Role role;
 
 	@Enumerated(EnumType.STRING)
@@ -47,16 +54,16 @@ public class User {
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Message> sentMessages = new ArrayList<>();
 
-	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Message> receivedMessages = new ArrayList<>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "conversation_participants", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "conversation_Id"))
+	private Set<Conversation> conversations = new HashSet<>();;
 
 	public User() {
 
 	}
 
-	public User(Long id, String email, String password, Role role, UserStatus userStatus, LocalDateTime createdAt,
-			LocalDateTime lastActive, Profile profile, List<Message> sentMessages, List<Message> receivedMessages) {
-		this.id = id;
+	public User(String email, String password, Role role, UserStatus userStatus, LocalDateTime createdAt,
+			LocalDateTime lastActive, Profile profile, List<Message> sentMessages) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -64,8 +71,6 @@ public class User {
 		this.createdAt = createdAt;
 		this.lastActive = lastActive;
 		this.profile = profile;
-		this.sentMessages = sentMessages;
-		this.receivedMessages = receivedMessages;
 	}
 
 	public Long getId() {
@@ -140,19 +145,19 @@ public class User {
 		this.sentMessages = sentMessages;
 	}
 
-	public List<Message> getReceivedMessages() {
-		return receivedMessages;
+	public Set<Conversation> getConversations() {
+		return conversations;
 	}
 
-	public void setReceivedMessages(List<Message> receivedMessages) {
-		this.receivedMessages = receivedMessages;
+	public void setConversations(Set<Conversation> conversations) {
+		this.conversations = conversations;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + password + ", role=" + role + ", userStatus="
 				+ userStatus + ", createdAt=" + createdAt + ", lastActive=" + lastActive + ", profile=" + profile
-				+ ", sentMessages=" + sentMessages + ", receivedMessages=" + receivedMessages + "]";
+				+ ", sentMessages=" + sentMessages + ", conversations=" + conversations + "]";
 	}
 
 }

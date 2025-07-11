@@ -11,10 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import raicode.example.chatapp.enums.MessageStatus;
 import raicode.example.chatapp.enums.MessageType;
 
 @Entity
+@Table(name = "messages")
 public class Message {
 
 	@Id
@@ -33,8 +35,8 @@ public class Message {
 	private User sender;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "receiver_id", nullable = false)
-	private User receiver;
+	@JoinColumn(name = "conversation_id")
+	private Conversation conversation;
 
 	private LocalDateTime timeStamp;
 
@@ -43,13 +45,13 @@ public class Message {
 	}
 
 	public Message(Long id, String content, MessageType contentType, MessageStatus messageStatus, User sender,
-			User receiver, LocalDateTime timeStamp) {
+			Conversation conversation, LocalDateTime timeStamp) {
 		this.id = id;
 		this.content = content;
 		this.contentType = contentType;
 		this.messageStatus = messageStatus;
 		this.sender = sender;
-		this.receiver = receiver;
+		this.conversation = conversation;
 		this.timeStamp = timeStamp;
 	}
 
@@ -93,12 +95,12 @@ public class Message {
 		this.sender = sender;
 	}
 
-	public User getReceiver() {
-		return receiver;
+	public Conversation getConversation() {
+		return conversation;
 	}
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
 	}
 
 	public LocalDateTime getTimeStamp() {
@@ -112,7 +114,8 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", content=" + content + ", contentType=" + contentType + ", messageStatus="
-				+ messageStatus + ", sender=" + sender + ", receiver=" + receiver + ", timeStamp=" + timeStamp + "]";
+				+ messageStatus + ", sender=" + sender + ", conversation=" + conversation + ", timeStamp=" + timeStamp
+				+ "]";
 	}
 
 }

@@ -36,8 +36,10 @@ public class SecurityConfig {
     		.authorizeHttpRequests(authorizeRequests -> authorizeRequests
     				.requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
     				.requestMatchers("/api/users/**").permitAll()
-    				.anyRequest()
-    				.authenticated()
+    				.requestMatchers("/api/conversations/**").permitAll()
+    				.requestMatchers("/api/messages").permitAll()
+    				.anyRequest().permitAll()
+//    				.authenticated()
     				)
     		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     		.authenticationProvider(authenticationProvider())
