@@ -25,7 +25,7 @@ public class Conversation {
 	private String name;
 
 	@ManyToMany(mappedBy = "conversations")
-	private Set<User> participants = new HashSet<>();;
+	private Set<User> participants = new HashSet<>();
 
 	@OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Message> message;
