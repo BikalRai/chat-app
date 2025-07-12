@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import raicode.example.chatapp.dto.message.MessageRequestDTO;
+import raicode.example.chatapp.dto.message.MessageResponseDTO;
 import raicode.example.chatapp.models.Message;
 import raicode.example.chatapp.services.MessageService;
 
@@ -25,12 +26,12 @@ public class MessageRestController {
 	}
 	
 	@PostMapping("/send")
-	public ResponseEntity<Message> sendMessge(@RequestBody MessageRequestDTO request) {
+	public ResponseEntity<MessageResponseDTO> sendMessge(@RequestBody MessageRequestDTO request) {
 		return ResponseEntity.ok(messageService.sendMessage(request));
 	}
 	
 	@GetMapping("/conversation/{conversationId}")
-	public ResponseEntity<List<Message>> getConversationMessages(@PathVariable Long conversationId) {
+	public ResponseEntity<List<MessageResponseDTO>> getConversationMessages(@PathVariable Long conversationId) {
 		return ResponseEntity.ok(messageService.getMessageByConversation(conversationId));
 	}
 }

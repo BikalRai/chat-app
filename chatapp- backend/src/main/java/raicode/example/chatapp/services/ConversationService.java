@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import raicode.example.chatapp.custom.customException.CustomException;
 import raicode.example.chatapp.custom.customException.ResourceNotFoundException;
 import raicode.example.chatapp.custom.customException.ServiceNotAvailableException;
+import raicode.example.chatapp.dto.conversation.ConversationResponseDTO;
 import raicode.example.chatapp.dto.conversation.GetOrCreateRequestDTO;
 import raicode.example.chatapp.models.Conversation;
 import raicode.example.chatapp.models.User;
@@ -32,17 +32,17 @@ public class ConversationService {
 		this.conversationRepo = conversationRepo;
 	}
 	
-	public Conversation getConversationBetweenUsers(GetOrCreateRequestDTO request) {
+	public ConversationResponseDTO getConversationBetweenUsers(GetOrCreateRequestDTO request) {
 		logger.info("Attempting to fetch conversation ...");
 		
 		try {
 			
 			Optional<Conversation> existing = conversationRepo
-					.findByParticipantsContainingAndParticipantsContaining(request.getSender(), request.getReceiver());
+					.findByUsers(request.getSender(), request.getReceiver());
 			
 			if(existing.isPresent()) {
 				logger.debug("Fetched the conversation");
-				return existing.get();
+				return new ConversationResponseDTO(existing.get());
 			}
 			
 			User sender = userRepo.findById(request.getSender().getId()).orElseThrow();
@@ -51,8 +51,11 @@ public class ConversationService {
 			Conversation conversation = new Conversation();
 			conversation.setParticipants(Set.of(sender,receipent));
 			
+			sender.getConversations().add(conversation);
+			receipent.getConversations().add(conversation);
+			
 			logger.debug("Created new conversation");
-			return conversationRepo.save(conversation);
+			return new ConversationResponseDTO(conversationRepo.save(conversation));
 			
 		} catch (DataAccessException e) {
 			logger.error("Database error while while attempting to send message: {}", e.getMessage());

@@ -1,7 +1,9 @@
 package raicode.example.chatapp.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import raicode.example.chatapp.custom.customException.CustomException;
 import raicode.example.chatapp.custom.customException.ResourceNotFoundException;
 import raicode.example.chatapp.custom.customException.ServiceNotAvailableException;
 import raicode.example.chatapp.dto.message.MessageRequestDTO;
+import raicode.example.chatapp.dto.message.MessageResponseDTO;
 import raicode.example.chatapp.enums.MessageStatus;
 import raicode.example.chatapp.enums.MessageType;
 import raicode.example.chatapp.models.Conversation;
@@ -37,7 +40,7 @@ public class MessageService {
 		this.userRepo = userRepo;
 	}
 	
-	public Message sendMessage(MessageRequestDTO request) {
+	public MessageResponseDTO sendMessage(MessageRequestDTO request) {
 		
 		logger.info("Attempting to send message....");
 		
@@ -57,8 +60,10 @@ public class MessageService {
 			message.setConversation(conversation);
 			message.setMessageStatus(MessageStatus.SENT);
 			message.setTimeStamp(LocalDateTime.now());
+			messageRepo.save(message);
 			
-			return messageRepo.save(message);
+			
+			return new MessageResponseDTO(message);
 			
 		} catch (DataAccessException e) {
 			logger.error("Database error while while attempting to send message: {}", e.getMessage());
@@ -70,8 +75,27 @@ public class MessageService {
 		
 	}
 	
-	public List<Message> getMessageByConversation(Long conversationId) {
-		return messageRepo.findByConversationIdOrderByTimeStampAsc(conversationId);
+	public List<MessageResponseDTO> getMessageByConversation(Long conversationId) {
+		logger.info("Attempting to retrieve all messages in the conversation ...");
+		
+		try {
+			List<Message> messages = messageRepo.findByConversationIdOrderByTimeStampAsc(conversationId);
+			
+			if(messages.isEmpty()) {
+				logger.debug("There are no messages in the conversation");
+				return new ArrayList<>();
+			}
+			
+			logger.debug("Loaded all messages in the conversation with id: {}", conversationId);
+			return messages.stream().map(message -> new MessageResponseDTO(message)).collect(Collectors.toList());
+		
+		} catch (DataAccessException e) {
+			logger.error("Database error while fetching message from the conversation: {}", conversationId);
+			throw new ServiceNotAvailableException("Database error");
+		}catch(Exception e) {
+			logger.error("An unexpected error occurred while fetching messages: {}", e.getMessage());
+			throw new CustomException("An unexpected error occurred while fetching message from conversation: " + conversationId);
+		}
 	}
 
 }
