@@ -3,6 +3,7 @@ package raicode.example.chatapp.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import raicode.example.chatapp.dto.message.MessageRequestDTO;
 import raicode.example.chatapp.dto.message.MessageResponseDTO;
-import raicode.example.chatapp.models.Message;
 import raicode.example.chatapp.services.MessageService;
 
 @RestController
@@ -34,4 +34,5 @@ public class MessageRestController {
 	public ResponseEntity<List<MessageResponseDTO>> getConversationMessages(@PathVariable Long conversationId) {
 		return ResponseEntity.ok(messageService.getMessageByConversation(conversationId));
 	}
+	
 }

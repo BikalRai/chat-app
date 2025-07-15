@@ -31,5 +31,10 @@ public class ConversationRestController {
 	public ResponseEntity<String> deleteConversation(@PathVariable Long conversationId) {
 		return ResponseEntity.ok(conversationService.deleteConversation(conversationId));
 	}
+	
+	@DeleteMapping("/{conversationId}/messages/{messageId}")
+	public ResponseEntity<String> deleteMessageFromConversation(@PathVariable Long conversationId, @PathVariable Long messageId) {
+		return ResponseEntity.ok(conversationService.deleteMessageFromConversation(conversationId, messageId));
+	}
 
 }
