@@ -42,3 +42,6 @@ target/
 # Application config files
 application.properties
 /.metadata/
+
+# Vite cache
+.vite/

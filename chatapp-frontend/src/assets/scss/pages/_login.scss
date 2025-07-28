@@ -1,0 +1,35 @@
+@use "../helper/variables" as vars;
+@use "../helper/containers" as *;
+
+.login__wrapper {
+  @include gh-container;
+  height: 100vh;
+  background-color: vars.$primary-color;
+  padding-top: vars.$base-padding;
+  padding-bottom: vars.$base-padding;
+  display: flex;
+  flex-direction: column;
+  gap: vars.$base-gap;
+
+  .login__description {
+    color: vars.$primary-light;
+    display: grid;
+    gap: vars.$base-gap;
+
+    p {
+      font-size: vars.$font-size-md;
+      font-weight: 500;
+    }
+  }
+
+  form {
+    background-color: red;
+    padding-top: vars.$base-padding;
+    padding-bottom: vars.$base-padding;
+
+    h1 {
+      font-size: vars.$font-size-xxl;
+      font-weight: 600;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+$container-max-width: 1440px;
+$container-padding-sm: 16px;
+$container-padding-md: 24px;
+$container-padding-lg: 32px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+@mixin gh-container {
+  max-width: $container-max-width;
+  padding-left: $container-padding-sm;
+  padding-right: $container-padding-sm;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (min-width: $breakpoint-md) {
+    padding-left: $container-padding-md;
+    padding-right: $container-padding-md;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    padding-left: $container-padding-lg;
+    padding-right: $container-padding-lg;
+  }
+}
