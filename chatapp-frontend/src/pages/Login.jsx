@@ -16,9 +16,15 @@ export default function Login() {
         <h1 className='text-[32px] font-medium'>Login</h1>
         <InputField label='email' />
         <InputField type='password' label='password' />
-        <Link className='text-xs text-gh-primary font-medium ms-auto'>
-          Forgot password?
-        </Link>
+        <div className='flex justify-between align-middle text-xs'>
+          <p>
+            Don;t have an account?{" "}
+            <Link className='text-gh-primary transition hover:underline hover:font-medium'>
+              Register
+            </Link>
+          </p>
+          <Link className='text-gh-primary font-medium'>Forgot password?</Link>
+        </div>
         <PrimaryGHButton />
         <div className='flex items-center gap-1.5'>
           <hr className='h-0.75 w-full border-0 bg-gray-300' />
