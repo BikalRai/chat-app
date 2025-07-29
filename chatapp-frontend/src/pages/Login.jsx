@@ -2,37 +2,41 @@ import InputField from "../components/InputField";
 import { Link } from "react-router-dom";
 import PrimaryGHButton from "../components/PrimaryGHButton";
 import GoogleGHButton from "../components/GoogleGHButton";
+import OrSeperator from "../components/OrSeperator";
 
 export default function Login() {
   return (
-    <div className='flex flex-col bg-gh-primary min-h-dvh justify-center lg:flex-row lg:align-middle'>
+    <div className='flex flex-col bg-gh-primary min-h-dvh justify-center md:items-center lg:flex-row lg:items-center lg:gap-12'>
       <div className='text-gh-light grid gap-3 p-5 md:flex md:flex-col md:justify-center '>
         <div className='logo'>
           <img src='./images/logo.png' alt='Logo' />
         </div>
         <p>Login to continue chatting with your friends and team.</p>
       </div>
-      <form className='flex flex-col gap-5 justify-center h-fit bg-gh-card p-5 lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center lg:w-[450px]'>
-        <h1 className='text-[32px] font-medium'>Login</h1>
-        <InputField label='email' />
-        <InputField type='password' label='password' />
-        <div className='flex justify-between align-middle text-xs'>
-          <p>
-            Don;t have an account?{" "}
-            <Link className='text-gh-primary transition hover:underline hover:font-medium'>
-              Register
+      <div className='p-4'>
+        <form className='flex flex-col gap-5 justify-center rounded-2xl bg-gh-card p-8 lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center md:w-[450px] lg:w-[500px]'>
+          <h1 className='text-[32px] font-medium'>Login</h1>
+          <InputField label='email' />
+          <InputField type='password' label='password' />
+          <div className='flex justify-between align-middle text-xs  lg:text-sm'>
+            <p>
+              Don't have an account?{" "}
+              <Link
+                to='register'
+                className='text-gh-primary transition hover:underline hover:font-medium'
+              >
+                Register
+              </Link>
+            </p>
+            <Link className='text-gh-primary font-medium'>
+              Forgot password?
             </Link>
-          </p>
-          <Link className='text-gh-primary font-medium'>Forgot password?</Link>
-        </div>
-        <PrimaryGHButton />
-        <div className='flex items-center gap-1.5'>
-          <hr className='h-0.75 w-full border-0 bg-gray-300' />
-          <p className='text-gray-400'>OR</p>
-          <hr className='h-0.75 w-full border-0 bg-gray-300' />
-        </div>
-        <GoogleGHButton />
-      </form>
+          </div>
+          <PrimaryGHButton buttonText='Login' />
+          <OrSeperator />
+          <GoogleGHButton btnText={`Login`} />
+        </form>
+      </div>
     </div>
   );
 }
