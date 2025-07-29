@@ -14,7 +14,7 @@ export default function Login() {
         <p>Login to continue chatting with your friends and team.</p>
       </div>
       <div className='p-4'>
-        <form className='flex flex-col gap-5 justify-center rounded-2xl bg-gh-card p-8 lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center md:w-[450px] lg:w-[500px]'>
+        <form className='flex flex-col gap-5 justify-center rounded-2xl bg-gh-card p-8 lg:justify-around lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center md:w-[450px] lg:w-[500px] lg:min-h-[570px]'>
           <h1 className='text-[32px] font-medium'>Login</h1>
           <InputField label='email' />
           <InputField type='password' label='password' />

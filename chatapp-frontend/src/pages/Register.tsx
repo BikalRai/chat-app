@@ -17,7 +17,7 @@ const Register = () => {
         </p>
       </div>
       <div className='p-4'>
-        <form className='flex flex-col gap-5 justify-center rounded-2xl bg-gh-card p-8 lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center lg:w-[500px] lg:order-1'>
+        <form className='flex flex-col gap-5 justify-center rounded-2xl bg-gh-card p-8 lg:shadow-2xl lg:rounded-4xl lg:p-12 lg:self-center md:w-[450px] lg:w-[500px] lg:min-h-[570px] lg:order-1'>
           <h1 className='text-[32px] font-medium'>Register</h1>
           <InputField label='username' />
           <InputField type='email' label='email' />
