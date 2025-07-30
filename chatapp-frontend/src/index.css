@@ -62,3 +62,12 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--color-gh-dark) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.active {
+  background-color: var(--color-gh-primary);
+  transition: 0.4s;
+}
+
+.active:hover {
+  background-color: var(--color-gh-dark-75);
+}
